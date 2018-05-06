@@ -1,0 +1,86 @@
+﻿@using System.Web.Optimization
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/entropizer.js"></script>
+<script src="~/Scripts/jquery-entropizer.js"></script>
+<link rel="stylesheet" type="text/css" href="~/Content/jquery-entropizer.css" />
+<div class="container-fluid">
+    <br />
+    <div class="row justify-content-center">
+        <div class="card" style="width:400px">
+            <h5 class="card-header text-white bg-primary">Authorization Server</h5>
+            <div class="card-body">
+                <form id="loginForm" novalidate class="form-horizontal needs-validation" role="form" method="POST">
+                    <div class="form-group row">
+                        <label class="col-sm-3">
+                            Account
+                        </label>
+                        <div class="col-sm-9">
+                            <input name="account" type="text" class="form-control" required />
+                            <div class="invalid-feedback">
+                                This field is required.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-3">
+                            Password
+                        </label>
+                        <div class="col-sm-9">
+                            <input id="password" name="password" type="password" class="form-control" required />
+                            <div id="passwordMeter">
+
+                            </div>
+                            <div class="invalid-feedback">
+                                This field is required.
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="form-group row justify-content-center">
+                        @if (ViewBag.Error != null)
+                        {
+                            <div class="alert alert-danger col-sm-11" role="alert">
+                                @ViewBag.Error
+                            </div>
+                        }
+                        <div class="col-sm-6">
+                            <button type="button" name="submit.register" class="btn btn-info text-white col-sm-12" disabled="disabled">Register</button>
+                        </div>
+                        <div class="col-sm-6">
+                            <button type="submit" name="submit.login" class="btn btn-success text-white col-sm-12">Login</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    (function () {
+        'use strict';
+        window.addEventListener('load', function () {
+            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+            var forms = document.getElementsByClassName('needs-validation'); // Loop over them and prevent submission
+            var validation = Array.prototype.filter.call(forms, function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (form.checkValidity() === false) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        }, false);
+    })();
+    $('#passwordMeter').entropizer({
+        target: '#password',
+        update: function (data, ui) {
+            ui.bar.css({
+                'background-color': data.color,
+                'width': data.percent + '%'
+            });
+        }
+    });
+</script>

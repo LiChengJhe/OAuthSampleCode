@@ -1,0 +1,8 @@
+﻿<Properties>
+  <Client>
+    <ID>Angular Client</ID>
+    <Name>Angular Client</Name>
+    <RedirectUrl>http://localhost:4200/Authentication/Oauth2Client</RedirectUrl>
+    <RedirectUrl>http://127.0.0.1:4200/Authentication/Oauth2Client</RedirectUrl>
+  </Client>
+</Properties>

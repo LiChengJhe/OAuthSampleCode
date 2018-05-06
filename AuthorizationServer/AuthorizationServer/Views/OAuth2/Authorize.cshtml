@@ -1,0 +1,44 @@
+﻿﻿@using System.Security.Claims
+@using System.Web
+@using System.Web.Optimization
+@using Microsoft.AspNet.Identity
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var authentication = Context.GetOwinContext().Authentication;
+    var ticket = authentication.AuthenticateAsync(DefaultAuthenticationTypes.ApplicationCookie).Result;
+    var identity = ticket != null ? ticket.Identity : null;
+    var scopes = (Request.QueryString.Get("scope") ?? "").Split(',');
+}
+
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="card" style="width:400px">
+            <h5 class="card-header text-white bg-primary">Authorization Server</h5>
+            <div class="card-body">
+                <form class="form-horizontal" role="form" method="POST">
+                    
+                    <h6>Hi, @identity.Name</h6>
+                    <h6>A third party application want to do the following on your behalf:</h6>
+                    <div class="form-group row justify-content-center">       
+                        <div class="alert alert-warning col-sm-11" role="alert">
+                            @foreach (var scope in scopes)
+                            {
+                                <i class="fa fa-check"></i> @scope
+                                <br/>
+                            }
+                        </div>
+                    </div>
+
+                    <div class="form-group row justify-content-center">
+                        <div class="col-sm-6">
+                            <input type="submit" name="submit.login" value="Switch User" class="btn btn-info text-white col-sm-12"/>
+                        </div>
+                        <div class="col-sm-6">
+                            <input type="submit" name="submit.grant" value="Grant" class="btn btn-success text-white col-sm-12"/>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

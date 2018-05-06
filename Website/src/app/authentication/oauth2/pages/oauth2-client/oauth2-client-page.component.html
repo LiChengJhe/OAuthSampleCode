@@ -1,0 +1,13 @@
+<div class="container-fluid" style="background-image: url(../../../../../assets/oauth2/img/bg001.png);">
+  <div class="row justify-content-md-center" style="height:18vh">
+  </div>
+  <div class="row justify-content-md-center" style="height: 25vh">
+    <button [disabled]="ExistToken" class="btn btn-success" style="width: 25vw; height: 15vh" (click)="this.OpenAuthenticationPage()">Authenticate</button>
+  </div>
+  <div class="row justify-content-md-center" style="height: 25vh">
+    <button [disabled]="!ExistToken" class="btn btn-primary" style="width: 25vw; height: 15vh" (click)="this.GetUserName()">Get User Name</button>
+  </div>
+  <div class="row justify-content-md-center" style="height: 25vh">
+    <button [disabled]="!ExistToken" class="btn btn-info" style="width: 25vw; height: 15vh" (click)="this.Logout()">Logout</button>
+  </div>
+</div>
