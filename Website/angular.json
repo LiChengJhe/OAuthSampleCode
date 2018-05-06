@@ -7,27 +7,25 @@
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
+      "prefix": "app",
+      "schematics": {},
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist",
+            "outputPath": "dist/website",
             "index": "src/index.html",
             "main": "src/main.ts",
-            "tsConfig": "src/tsconfig.app.json",
             "polyfills": "src/polyfills.ts",
+            "tsConfig": "src/tsconfig.app.json",
             "assets": [
-              "src/assets",
-              "src/favicon.ico"
+              "src/favicon.ico",
+              "src/assets"
             ],
             "styles": [
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "node_modules/toastr/build/toastr.min.css",
-              "src/assets/jquery-entropizer/jquery-entropizer.css",
               "node_modules/font-awesome/css/font-awesome.min.css",
-              "node_modules/primeng/resources/themes/home/theme.css",
-              "node_modules/primeng/resources/primeng.min.css",
-              "src/assets/jquery-ui/jquery-ui.min.css",
               "src/styles.css"
             ],
             "scripts": [
@@ -35,15 +33,17 @@
               "node_modules/bootstrap/dist/js/bootstrap.min.js",
               "node_modules/jquery.cookie/jquery.cookie.js",
               "node_modules/toastr/build/toastr.min.js",
-              "node_modules/@ngui/auto-complete/dist/auto-complete.umd.js",
-              "src/assets/jquery-entropizer/entropizer.js",
-              "src/assets/jquery-entropizer/jquery-entropizer.js",
-              "src/assets/jquery-base64/jquery.base64.js",
-              "src/assets/jquery-ui/jquery-ui.min.js"
+              "src/assets/jquery-base64/jquery.base64.js"
             ]
           },
           "configurations": {
             "production": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ],
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
@@ -52,13 +52,7 @@
               "aot": true,
               "extractLicenses": true,
               "vendorChunk": false,
-              "buildOptimizer": true,
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.prod.ts"
-                }
-              ]
+              "buildOptimizer": true
             }
           }
         },
@@ -83,33 +77,25 @@
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
             "main": "src/test.ts",
-            "karmaConfig": "./karma.conf.js",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "src/tsconfig.spec.json",
+            "karmaConfig": "src/karma.conf.js",
+            "styles": [
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "node_modules/toastr/build/toastr.min.css",
+              "node_modules/font-awesome/css/font-awesome.min.css",
+              "src/styles.css"
+            ],
             "scripts": [
               "node_modules/jquery/dist/jquery.min.js",
               "node_modules/bootstrap/dist/js/bootstrap.min.js",
               "node_modules/jquery.cookie/jquery.cookie.js",
               "node_modules/toastr/build/toastr.min.js",
-              "node_modules/@ngui/auto-complete/dist/auto-complete.umd.js",
-              "src/assets/jquery-entropizer/entropizer.js",
-              "src/assets/jquery-entropizer/jquery-entropizer.js",
-              "src/assets/jquery-base64/jquery.base64.js",
-              "src/assets/jquery-ui/jquery-ui.min.js"
-            ],
-            "styles": [
-              "node_modules/bootstrap/dist/css/bootstrap.min.css",
-              "node_modules/toastr/build/toastr.min.css",
-              "src/assets/jquery-entropizer/jquery-entropizer.css",
-              "node_modules/font-awesome/css/font-awesome.min.css",
-              "node_modules/primeng/resources/themes/home/theme.css",
-              "node_modules/primeng/resources/primeng.min.css",
-              "src/assets/jquery-ui/jquery-ui.min.css",
-              "src/styles.css"
+              "src/assets/jquery-base64/jquery.base64.js"
             ],
             "assets": [
-              "src/assets",
-              "src/favicon.ico"
+              "src/favicon.ico",
+              "src/assets"
             ]
           }
         },
@@ -128,23 +114,20 @@
       }
     },
     "website-e2e": {
-      "root": "",
-      "sourceRoot": "",
+      "root": "e2e/",
       "projectType": "application",
       "architect": {
         "e2e": {
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
-            "protractorConfig": "./protractor.conf.js",
+            "protractorConfig": "e2e/protractor.conf.js",
             "devServerTarget": "website:serve"
           }
         },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": [
-              "e2e/tsconfig.e2e.json"
-            ],
+            "tsConfig": "e2e/tsconfig.e2e.json",
             "exclude": [
               "**/node_modules/**"
             ]
@@ -153,14 +136,5 @@
       }
     }
   },
-  "defaultProject": "website",
-  "schematics": {
-    "@schematics/angular:component": {
-      "prefix": "app",
-      "styleext": "css"
-    },
-    "@schematics/angular:directive": {
-      "prefix": "app"
-    }
-  }
+  "defaultProject": "website"
 }
