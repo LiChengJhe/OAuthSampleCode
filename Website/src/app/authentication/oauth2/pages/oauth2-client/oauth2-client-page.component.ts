@@ -35,7 +35,7 @@ export class Oauth2ClientPageComponent implements OnInit, OnDestroy {
       ClientID: 'Angular Client',
       ServerURL: this.api.GetWebApiConnection(ConnSource.OAuth2Server).GetOrigin() + '/OAuth2/Authorize',
       RedirectURL: window.location.href,
-      State: 'OAuth2',
+      State: '956F20A08A09555F42C38F664C',
       Scope: 'Assess Profile'
     });
   }
