@@ -7,7 +7,7 @@ import { Oauth2Fragment } from '../models/oauth2-fragment';
 import { WebApiManagerService, ConnSource } from '../../../web-api/services/web-api-manager.service';
 declare var toastr: any;
 @Injectable()
-export class Oauth2GuardService implements CanActivate, OnDestroy {
+export class Oauth2Guard implements CanActivate, OnDestroy {
 
   private _TokenTimer: Subscription = null;
   constructor(private router: Router, private api: WebApiManagerService, private oauth2: Oauth2Service) {

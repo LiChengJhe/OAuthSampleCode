@@ -13,30 +13,28 @@ export enum ConnSource {
 }
 
 export class WebApiConnection {
-    private _Protocol: Protocol;
     private _Domain: string;
     private _PrefixPath: string;
 
-    constructor(protocol: Protocol, domain: string, prefixPath: string) {
-        this._Protocol = protocol;
+    constructor(domain: string, prefixPath: string) {
         this._Domain = domain;
         this._PrefixPath = prefixPath;
     }
 
-     GetOrigin(): string {
-        return Protocol[this._Protocol] + '://' + this._Domain;
+    GetOrigin(protocol?: Protocol): string {
+        return Protocol[protocol ? protocol : Protocol.http] + '://' + this._Domain;
     }
 
-     GetHttpHeader(authorization?: string): HttpHeaders {
+    GetHttpHeader(authorization?: string): HttpHeaders {
         let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
         if (authorization) {
-            headers = headers.append('Authorization',  authorization);
+            headers = headers.append('Authorization', authorization);
         }
         return headers;
     }
 
-     GetWebApiUrl(controllerPath: string, actionName: string): string {
-        let url: string = Protocol[this._Protocol] + '://' + this._Domain + '/';
+    GetWebApiUrl(controllerPath: string, actionName: string, protocol?: Protocol): string {
+        let url: string = Protocol[protocol ? protocol : Protocol.http] + '://' + this._Domain + '/';
         if (this._PrefixPath != null) {
             url += this._PrefixPath + '/';
         }
@@ -49,8 +47,8 @@ export class WebApiConnection {
 export class WebApiManagerService {
     private _Conns: Map<ConnSource, WebApiConnection> = new Map<ConnSource, WebApiConnection>();
     constructor() {
-      this._Conns.set(ConnSource.OAuth2Server, new WebApiConnection(Protocol.http, 'localhost:11625', 'OAuth2'));
-      this._Conns.set(ConnSource.ResourceServer, new WebApiConnection(Protocol.http, 'localhost:58982', 'api'));
+        this._Conns.set(ConnSource.OAuth2Server, new WebApiConnection('localhost:11625', 'OAuth2'));
+        this._Conns.set(ConnSource.ResourceServer, new WebApiConnection('localhost:58982', 'api'));
 
     }
 
