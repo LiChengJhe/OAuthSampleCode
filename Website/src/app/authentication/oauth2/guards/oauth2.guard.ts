@@ -1,20 +1,23 @@
 
 import {timer as observableTimer,  Observable ,  Subscription } from 'rxjs';
 import { Injectable, OnDestroy } from '@angular/core';
-import { CanActivate, Router } from '@angular/router';
+import { CanActivate, Router, ActivatedRouteSnapshot, RouterStateSnapshot, CanActivateChild, CanDeactivate } from '@angular/router';
 import { Oauth2Service } from '../services/oauth2.service';
 import { Oauth2Fragment } from '../models/oauth2-fragment';
 import { WebApiManagerService, ConnSource } from '../../../web-api/services/web-api-manager.service';
+import { Oauth2ClientPageComponent } from '../pages/oauth2-client/oauth2-client-page.component';
 declare var toastr: any;
 @Injectable()
-export class Oauth2Guard implements CanActivate, OnDestroy {
+export class Oauth2Guard implements CanActivate, CanActivateChild, CanDeactivate<Oauth2ClientPageComponent>, OnDestroy {
 
   private _TokenTimer: Subscription = null;
   constructor(private router: Router, private api: WebApiManagerService, private oauth2: Oauth2Service) {
 
   }
-
-  canActivate(): boolean | Observable<boolean> | Promise<boolean> {
+  canActivateChild(childRoute: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | Observable<boolean> | Promise<boolean> {
+    return  this.canActivate(childRoute, state);
+  }
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | Observable<boolean> | Promise<boolean> {
 
     toastr.options = {
       positionClass: 'toast-bottom-right'
@@ -42,6 +45,11 @@ export class Oauth2Guard implements CanActivate, OnDestroy {
       }
       return isValid;
   }
+  canDeactivate(component: Oauth2ClientPageComponent, currentRoute: ActivatedRouteSnapshot,
+     currentState: RouterStateSnapshot, nextState?: RouterStateSnapshot): boolean | Observable<boolean> | Promise<boolean> {
+    return component.ExistToken;
+  }
+
   ngOnDestroy(): void {
     this._TokenTimer.unsubscribe();
   }
