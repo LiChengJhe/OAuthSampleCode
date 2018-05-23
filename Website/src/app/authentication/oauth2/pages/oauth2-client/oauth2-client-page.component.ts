@@ -44,6 +44,7 @@ export class Oauth2ClientPageComponent implements OnInit, OnDestroy {
       positionClass: 'toast-bottom-right'
     };
     this.ExistToken = false;
+    this.oauth2.ClearToken();
     this.oauth2.RemoveFragmentFromCookie();
     toastr.success('Your account has been logout');
   }

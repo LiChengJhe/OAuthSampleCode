@@ -5,17 +5,26 @@ import { Oauth2Fragment } from '../models/oauth2-fragment';
 declare var $: any;
 @Injectable()
 export class Oauth2Service implements OnDestroy {
+  private _AccessToken: string;
+
   constructor() {
   }
+
   ngOnDestroy(): void {
   }
+
   GetToken(): string {
-    const fragment: Oauth2Fragment = this.GetFragmentFromCookie();
-    if (fragment) {
-      return fragment.AccessToken;
-    } else {
-      return null;
+    if (!this._AccessToken) {
+      const fragment: Oauth2Fragment = this.GetFragmentFromCookie();
+      if (fragment) {
+        this._AccessToken = fragment.AccessToken;
+      }
     }
+    return this._AccessToken;
+  }
+  ClearToken(): void {
+    this._AccessToken = null;
+    this.RemoveFragmentFromCookie();
   }
   GetAuthorization(): string {
     const fragment: Oauth2Fragment = this.GetFragmentFromCookie();
@@ -44,7 +53,7 @@ export class Oauth2Service implements OnDestroy {
   RemoveFragmentFromCookie(): void {
     $.removeCookie('Oauth2Fragment', { path: '/' });
   }
-   ReceiveFragmentFromURL(location: Location): void {
+  ReceiveFragmentFromURL(location: Location): void {
     let fragm: any = null;
 
     if (location.hash.indexOf('#') === 0) {
@@ -62,7 +71,6 @@ export class Oauth2Service implements OnDestroy {
       window.close();
     }
   }
-
   OpenAuthenticationPage(clientProp: Oauth2ClientProp,
     tabProp: TabProp = {
       Title: 'Authorize', Height: 350, Width: 600,
