@@ -1,6 +1,7 @@
 export class Oauth2Fragment {
-    AccessToken: string;
+  AccessToken: string;
     ExpiresIn: number;
+    ExpiryDateTime: number;
     State: string;
     TokenType: string;
 }

@@ -13,51 +13,41 @@ declare var toastr: any;
 })
 export class Oauth2ClientPageComponent implements OnInit, OnDestroy {
   ExistToken: boolean;
-  TokenTimerEvent: Subscription;
-  constructor( private api: WebApiManagerService, private oauth2: Oauth2Service, private user: UserService) {
-  }
-  ngOnInit() {
+  private  _TokenTimerEvent: Subscription;
+   constructor(private api: WebApiManagerService, private oauth2: Oauth2Service) {
 
-    this.oauth2.ReceiveFragmentFromURL(window.location);
-    this.RunTokenTimer();
-  }
-  RunTokenTimer(): void {
-    this.TokenTimerEvent = observableTimer(0, 1000).subscribe(() => {
-      if (this.oauth2.GetToken()) {
-        this.ExistToken = true;
-      } else {
-        this.ExistToken = false;
-      }
-    });
-  }
-  OpenAuthenticationPage(): void {
-    this.oauth2.OpenAuthenticationPage({
-      ClientID: 'Angular Client',
-      ServerURL: this.api.GetWebApiConnection(ConnSource.OAuth2Server).GetOrigin() + '/OAuth2/Authorize',
-      RedirectURL: window.location.href,
-      State: '956F20A08A09555F42C38F664C',
-      Scope: 'Assess Profile'
-    });
-  }
-  Logout(): void {
-    toastr.options = {
-      positionClass: 'toast-bottom-right'
-    };
-    this.ExistToken = false;
-    this.oauth2.ClearToken();
-    this.oauth2.RemoveFragmentFromCookie();
-    toastr.success('Your account has been logout');
-  }
-  ngOnDestroy(): void {
-    this.TokenTimerEvent.unsubscribe();
-  }
-  GetUserName(): void {
-    this.user.GetUserName().subscribe(res => {
-      toastr.options = {
-        positionClass: 'toast-bottom-right'
-      };
-      toastr.success(res);
-    });
-  }
+   }
+   ngOnInit() {
+     this.oauth2.ReceiveFragmentFromURL(window.location);
+     this.RunTokenTimer();
+   }
+   RunTokenTimer(): void {
+     this._TokenTimerEvent = observableTimer(0, 1000).subscribe(() => {
+       if (this.oauth2.GetToken()) {
+         this.ExistToken = true;
+       } else {
+         this.ExistToken = false;
+       }
+     });
+   }
+   OpenAuthenticationPage(): void {
+     this.oauth2.OpenAuthenticationPage({
+       ClientID: 'Angular Client',
+       ServerURL: this.api.GetWebApiConnection(ConnSource.OAuth2Server).GetOrigin() + '/OAuth2/Authorize',
+       RedirectURL: window.location.href,
+       Scope: 'Assess Profile'
+     });
+   }
+   Logout(): void {
+     toastr.options = {
+       positionClass: 'toast-bottom-right'
+     };
+     this.ExistToken = false;
+     this.oauth2.ClearToken();
+     toastr.success('Your account has been logout');
+   }
+   ngOnDestroy(): void {
+     this._TokenTimerEvent.unsubscribe();
+   }
 }
 
