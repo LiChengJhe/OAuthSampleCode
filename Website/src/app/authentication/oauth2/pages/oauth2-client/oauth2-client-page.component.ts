@@ -14,7 +14,7 @@ declare var toastr: any;
 export class Oauth2ClientPageComponent implements OnInit, OnDestroy {
   ExistToken: boolean;
   private  _TokenTimerEvent: Subscription;
-   constructor(private api: WebApiManagerService, private oauth2: Oauth2Service) {
+   constructor(private api: WebApiManagerService, private oauth2: Oauth2Service, private user: UserService) {
 
    }
    ngOnInit() {
@@ -46,6 +46,14 @@ export class Oauth2ClientPageComponent implements OnInit, OnDestroy {
      this.oauth2.ClearToken();
      toastr.success('Your account has been logout');
    }
+   GetUserName(): void {
+    this.user.GetUserName().subscribe(res => {
+      toastr.options = {
+        positionClass: 'toast-bottom-right'
+      };
+      toastr.success(res);
+    });
+  }
    ngOnDestroy(): void {
      this._TokenTimerEvent.unsubscribe();
    }
