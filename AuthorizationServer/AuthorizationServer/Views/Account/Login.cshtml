@@ -12,30 +12,35 @@
             <h5 class="card-header text-white bg-primary">Authorization Server</h5>
             <div class="card-body">
                 <form id="loginForm" novalidate class="form-horizontal needs-validation" role="form" method="POST">
-                    <div class="form-group row">
-                        <label class="col-sm-3">
-                            Account
-                        </label>
-                        <div class="col-sm-9">
+                    <div class="form-row">
+                        <div class="form-group col-sm-12">
+                            <h5 style="display:inline">
+                                <span class="badge badge-info col-sm-12 text-left">
+                                    Account
+                                    <span style="color:crimson">*</span>
+                                </span>
+                            </h5>
                             <input name="account" type="text" class="form-control" required />
                             <div class="invalid-feedback">
-                                This field is required.
+                                <span class="badge badge-danger col-sm-12 invalid-feedback">This field is required</span>
                             </div>
                         </div>
                     </div>
-                    <div class="form-group row">
-                        <label class="col-sm-3">
-                            Password
-                        </label>
-                        <div class="col-sm-9">
+                    <div class="form-row">
+                        <div class="form-group col-sm-12">
+                            <h5 style="display:inline">
+                                <span class="badge badge-info col-sm-12 text-left">
+                                    Password
+                                    <span style="color:crimson">*</span>
+                                </span>
+                            </h5>
                             <input id="password" name="password" type="password" class="form-control" required />
                             <div id="passwordMeter">
 
                             </div>
                             <div class="invalid-feedback">
-                                This field is required.
+                                <span class="badge badge-danger col-sm-12">This field is required</span>
                             </div>
-
                         </div>
                     </div>
                     <div class="form-group row justify-content-center">
