@@ -32,8 +32,7 @@
               "node_modules/jquery/dist/jquery.min.js",
               "node_modules/bootstrap/dist/js/bootstrap.min.js",
               "node_modules/jquery.cookie/jquery.cookie.js",
-              "node_modules/toastr/build/toastr.min.js",
-              "src/assets/jquery-base64/jquery.base64.js"
+              "node_modules/toastr/build/toastr.min.js"
             ]
           },
           "configurations": {
@@ -90,8 +89,7 @@
               "node_modules/jquery/dist/jquery.min.js",
               "node_modules/bootstrap/dist/js/bootstrap.min.js",
               "node_modules/jquery.cookie/jquery.cookie.js",
-              "node_modules/toastr/build/toastr.min.js",
-              "src/assets/jquery-base64/jquery.base64.js"
+              "node_modules/toastr/build/toastr.min.js"
             ],
             "assets": [
               "src/favicon.ico",
